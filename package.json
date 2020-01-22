@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "bull": "^3.12.1"
+  },
+  "devDependencies": {
+    "@types/bull": "^3.12.0"
+  }
+}

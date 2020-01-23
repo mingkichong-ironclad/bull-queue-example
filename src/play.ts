@@ -1,12 +1,16 @@
 import * as Queue from 'bull';
+import * as Arena from 'bull-arena';
 import * as Bull_Board from 'bull-board';
 import * as Express from 'express';
+import * as _ from 'lodash';
 
 const QUEUE_NAME = 'Bull Queue Example';
 const REDIS_URL = 'redis://127.0.0.1:6379';
 const LOCAL_LISTENING_PORT = 56789;
 
 const IS_ERROR = true;
+const DEBUG_STRING = 'DEBUG';
+const IS_DEBUG = _.includes(process.argv.splice(2), DEBUG_STRING);
 const TIMEOUT_DURATION = 2000;
 
 const app = Express();
@@ -24,16 +28,16 @@ app.use('/admin/queues', Bull_Board.UI);
 
 app.listen(LOCAL_LISTENING_PORT, () => console.log("Server started on port " + LOCAL_LISTENING_PORT)); // http://localhost:56789/
 
-console.log("===   Submit JOB   ===");
-console.log(new Date().toLocaleString());
+dPrint("===   Submit JOB   ===");
+dPrint(new Date().toLocaleString());
 let promise = queue.add({ job_key: "job_value" });
-console.log("======================\n");
+dPrint("======================\n");
 
 queue.process((job) => {
   return new Promise<Queue.Job>(function(resolve, reject) {
-    console.log("===   PROCESS JOB   ===");
-    console.log(new Date().toLocaleString());
-    console.log("============================\n");
+    dPrint("===   PROCESS JOB   ===");
+    dPrint(new Date().toLocaleString());
+    dPrint("============================\n");
     console.log(job.data);
     console.log("\n");
     setTimeout(() => {
@@ -41,27 +45,33 @@ queue.process((job) => {
         reject(job);
       }
       resolve(job);
-      console.log("===   Promise DONE   ===");
-      console.log(new Date().toLocaleString());
-      console.log("========================\n");
+      dPrint("===   Promise DONE   ===");
+      dPrint(new Date().toLocaleString());
+      dPrint("========================\n");
     }, TIMEOUT_DURATION);
   });
 });
 
-console.log("===   WAITING FOR JOB TO RETURN   ===");
-console.log(new Date().toLocaleString());
-console.log("=====================================\n");
-
+dPrint("===   WAITING FOR JOB TO RETURN   ===");
+dPrint(new Date().toLocaleString());
+dPrint("=====================================\n");
 
 setTimeout(() => {
   promise.then((job) => {
-    console.log("===   JOB RETURNED   ===");
-    console.log(new Date().toLocaleString());
-    console.log("========================\n");
+    dPrint("===   JOB RETURNED   ===");
+    dPrint(new Date().toLocaleString());
+    dPrint("========================\n");
+    console.log("Processed");
     console.log(job.data);
     console.log("\n");
-    console.log("===   JOB RETURNED DONE  ===");
-    console.log(new Date().toLocaleString());
-    console.log("============================\n");
+    dPrint("===   JOB RETURNED DONE  ===");
+    dPrint(new Date().toLocaleString());
+    dPrint("============================\n");
   });
 }, TIMEOUT_DURATION);
+
+function dPrint(msg: any) {
+  if (IS_DEBUG) {
+    console.log(msg);
+  }
+}

@@ -1,2 +1,2 @@
 tsc
-node ./compiled/play DEBUG
+node ./compiled/play

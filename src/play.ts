@@ -1,5 +1,5 @@
 import * as Queue from 'bull';
-import * as Arena from 'bull-arena';
+import Arena = require('bull-arena');
 import * as BullBoard from 'bull-board';
 import * as Express from 'express';
 import * as _ from 'lodash';
@@ -35,6 +35,9 @@ const arenaConfig = Arena(
         redis: REDIS_CONFIG,
       },
     ],
+  },
+  {
+    disableListen: true,
   }
 );
 app.use('/admin/arena', arenaConfig);

@@ -3,9 +3,17 @@ import * as Arena from 'bull-arena';
 import * as Bull_Board from 'bull-board';
 import * as Express from 'express';
 import * as _ from 'lodash';
+import * as OS from 'os';
 
 const QUEUE_NAME = 'Bull Queue Example';
-const REDIS_URL = 'redis://127.0.0.1:6379';
+const REDIS_HOST = "127.0.0.1";
+const REDIS_PORT = 6379;
+const REDIS_URL = `redis://${REDIS_HOST}:${REDIS_PORT}`;
+const REDIS_CONFIG = {
+  host: REDIS_HOST,
+  port: REDIS_PORT,
+};
+
 const LOCAL_LISTENING_PORT = 56789;
 
 const IS_ERROR = true;
@@ -14,19 +22,28 @@ const IS_DEBUG = _.includes(process.argv.splice(2), DEBUG_STRING);
 const TIMEOUT_DURATION = 2000;
 
 const app = Express();
+const queue = new Queue(QUEUE_NAME, { redis: REDIS_CONFIG });
 
-const queue = new Queue(QUEUE_NAME, {
-  redis: {
-    host: '127.0.0.1',
-    port: 6379
+// bull-arena setup
+// check out complete example from https://github.com/tsukakei/express-bull-arena-example
+const arenaConfig = Arena(
+  {
+    queues: [
+      {
+        name: QUEUE_NAME,
+        hostId: REDIS_HOST,
+        redis: REDIS_CONFIG,
+      },
+    ],
   }
-});
+);
+app.use('/admin/arena', arenaConfig);
 
 // bull-board setup
 Bull_Board.setQueues([queue]);
-app.use('/admin/queues', Bull_Board.UI);
+app.use('/admin/board', Bull_Board.UI);
 
-app.listen(LOCAL_LISTENING_PORT, () => console.log("Server started on port " + LOCAL_LISTENING_PORT)); // http://localhost:56789/
+app.listen(LOCAL_LISTENING_PORT, () => console.log("Server started on host: " + OS.hostname + ", port " + LOCAL_LISTENING_PORT)); // http://localhost:56789/
 
 dPrint("===   Submit JOB   ===");
 dPrint(new Date().toLocaleString());

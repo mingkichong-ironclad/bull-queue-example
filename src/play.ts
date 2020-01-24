@@ -1,6 +1,6 @@
 import * as Queue from 'bull';
 import * as Arena from 'bull-arena';
-import * as Bull_Board from 'bull-board';
+import * as BullBoard from 'bull-board';
 import * as Express from 'express';
 import * as _ from 'lodash';
 import * as OS from 'os';
@@ -40,8 +40,8 @@ const arenaConfig = Arena(
 app.use('/admin/arena', arenaConfig);
 
 // bull-board setup
-Bull_Board.setQueues([queue]);
-app.use('/admin/board', Bull_Board.UI);
+BullBoard.setQueues([queue]);
+app.use('/admin/board', BullBoard.UI);
 
 app.listen(LOCAL_LISTENING_PORT, () => console.log("Server started on host: " + OS.hostname + ", port " + LOCAL_LISTENING_PORT)); // http://localhost:56789/
 

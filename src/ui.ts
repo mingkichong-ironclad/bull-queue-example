@@ -5,10 +5,6 @@ import * as OS from 'os';
 
 import { queue, QUEUE_NAME, REDIS_HOST, REDIS_PORT, REDIS_URL } from './queue';
 
-const REDIS_CONFIG = {
-  host: REDIS_HOST,
-  port: REDIS_PORT,
-};
 const LOCAL_LISTENING_PORT = 56789;
 
 const app = Express();
@@ -21,7 +17,10 @@ const arenaConfig = Arena(
       {
         name: QUEUE_NAME,
         hostId: REDIS_HOST,
-        redis: REDIS_CONFIG,
+        redis: {
+          host: REDIS_HOST,
+          port: REDIS_PORT,
+        },
       },
     ],
   },
@@ -35,4 +34,4 @@ app.use('/admin/arena', arenaConfig);
 BullBoard.setQueues([queue]);
 app.use('/admin/board', BullBoard.UI);
 
-app.listen(LOCAL_LISTENING_PORT, () => console.log("Server started on host: " + OS.hostname + ", port " + LOCAL_LISTENING_PORT)); // http://localhost:56789/
+app.listen(LOCAL_LISTENING_PORT, () => console.log("Server started on host: " + OS.hostname + ", port " + LOCAL_LISTENING_PORT)); // http://localhost:56789/admin/{arena|board}

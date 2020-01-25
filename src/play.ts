@@ -5,11 +5,6 @@ import * as BullBoard from 'bull-board';
 import * as Express from 'express';
 import * as _ from 'lodash';
 
-const REDIS_CONFIG = {
-  host: REDIS_HOST,
-  port: REDIS_PORT,
-};
-
 const LOCAL_LISTENING_PORT = 56789;
 
 const IS_ERROR = true;

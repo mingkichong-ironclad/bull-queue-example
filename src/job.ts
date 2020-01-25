@@ -6,7 +6,7 @@ const app = Express();
 const LISTEN_PORT = 3000;
 
 app.get('/jobs', (req, res) => {
-  sendData(queue).then((returnString)=>{
+  sendData(queue, "jobs.ts").then((returnString)=>{
     console.log(returnString);
     res.send(returnString);
   });

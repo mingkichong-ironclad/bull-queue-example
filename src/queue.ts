@@ -7,9 +7,9 @@ export const REDIS_URL = `redis://${REDIS_HOST}:${REDIS_PORT}`;
 
 export const queue = new BullQueue(QUEUE_NAME, REDIS_URL);
 
-export async function sendData(bullQueue: BullQueue.Queue) {
+export async function sendData(bullQueue: BullQueue.Queue, origin: string) {
   const date = new Date();
-  const data = { origin: "client.ts", date: date.toLocaleString(), epoch: date.getTime() };
+  const data = { origin: origin, date: date.toLocaleString(), epoch: date.getTime() };
   const queueJob = await bullQueue.add(data);
   return JSON.stringify(queueJob.data);
 }

@@ -19,8 +19,8 @@ queue.process((job) => {
       }
       resolve(job.data);
     }, TIMEOUT_DURATION);
-    queue.count().then((job) => {
-      console.log(`Remaining items in the queue: ${job}`);
+    queue.count().then((itemsCount) => {
+      console.log(`Remaining items in the queue: ${itemsCount}`);
       console.log("\n");
     });
   });

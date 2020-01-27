@@ -17,7 +17,10 @@ queue.process((job) => {
       if (Math.floor(Math.random() + 0.5)) {
         reject("FAILED");
       }
-      resolve(job.data);
+      else {
+        resolve(job.data);
+        job.progress(100);
+      }
     }, TIMEOUT_DURATION);
     queue.count().then((itemsCount) => {
       console.log(`Remaining items in the queue: ${itemsCount}`);

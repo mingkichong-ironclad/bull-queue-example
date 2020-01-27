@@ -5,12 +5,13 @@ import * as BullBoard from 'bull-board';
 
 const LOCAL_LISTENING_PORT = 56789;
 const DEBUG_STRING = 'DEBUG';
-const TIMEOUT_DURATION = 500;
+const TIMEOUT_DURATION = 50;
 
 console.log("Waiting for jobs ...");
 
 queue.process((job) => {
   return new Promise<Job>(function(resolve, reject) {
+    console.log(`ID: ${job.id}`);
     console.log(job.data);
     console.log("\n");
     setTimeout(() => {

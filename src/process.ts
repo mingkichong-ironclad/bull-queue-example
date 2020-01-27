@@ -2,7 +2,6 @@ import { queue, QUEUE_NAME, REDIS_HOST, REDIS_PORT, REDIS_URL } from './queue';
 import { Job } from 'bull';
 import Arena = require('bull-arena');
 import * as BullBoard from 'bull-board';
-import * as Express from 'express';
 
 const LOCAL_LISTENING_PORT = 56789;
 const DEBUG_STRING = 'DEBUG';

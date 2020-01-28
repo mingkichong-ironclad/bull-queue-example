@@ -8,6 +8,10 @@ const app = Express();
 
 const LISTEN_PORT = 3000;
 
+app.get('/jobs/', (req, res) => {
+  sendDataToQueue(queues[0], req, res);
+});
+
 for(let i = 0; i < NUM_OF_QUEUES; i++){
   app.get('/jobs/'+(i+1), (req, res) => {
     sendDataToQueue(queues[i], req, res);

@@ -4,7 +4,7 @@ import * as BullBoard from 'bull-board';
 
 const LOCAL_LISTENING_PORT = 56789;
 const DEBUG_STRING = 'DEBUG';
-const TIMEOUT_DURATION = 50;
+const TIMEOUT_DURATION = 5;
 
 console.log("Waiting for jobs ...");
 

@@ -1,4 +1,4 @@
-# Bull Queue with Web GUI Example
+# Node.js Bull Queue with Web GUI Example
 
 This is an example code of integrating [`bull`](https://www.npmjs.com/package/bull) with web GUIs, [`bull-arena`](https://www.npmjs.com/package/bull-arena) and [`bull-board`](https://www.npmjs.com/package/bull-board)
 

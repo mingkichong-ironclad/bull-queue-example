@@ -3,7 +3,7 @@
 # send a job to a randomly picked queue, and repeat $1 times
 
 let repeats=1
-let NUM_OF_QUEUES=3
+let NUM_OF_QUEUES=50
 
 if [[ "$1" =~ ^[0-9]+$ ]] && [ "$1" -gt "1" ]; then
   repeats=$1

@@ -1,6 +1,5 @@
 import * as BullQueue from 'bull';
-import { queue, queue2, queue3, QUEUE_NAME, REDIS_HOST, REDIS_PORT, REDIS_URL } from './queue';
-import Arena = require('bull-arena');
+import { queues, NUM_OF_QUEUES } from './queue';
 import * as BullBoard from 'bull-board';
 
 const LOCAL_LISTENING_PORT = 56789;
@@ -9,9 +8,9 @@ const TIMEOUT_DURATION = 50;
 
 console.log("Waiting for jobs ...");
 
-processQueueJobs(queue);
-processQueueJobs(queue2);
-processQueueJobs(queue3);
+for(let i = 0; i < NUM_OF_QUEUES; i++){
+  processQueueJobs(queues[i]);
+}
 
 function processQueueJobs(bullQueue: BullQueue.Queue){
   bullQueue.process((job) => {
